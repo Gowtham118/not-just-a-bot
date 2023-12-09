@@ -7,15 +7,16 @@ import {
 } from "@lifi/sdk";
 import { Signer } from "ethers";
 import { OrderType, Side, Spot } from "@binance/connector-typescript";
+import axios from "axios";
 
 const lifi = new LiFi({
-  integrator: "Dime",
-  // apiUrl: 'https://staging.li.quest/v1/' //just to test
+  integrator: "NATTY",
 });
 
 const API_KEY = process.env.BINANCE_API_KEY;
 const API_SECRET = process.env.BINANCE_API_SECRET;
 const BASE_URL = "https://api.binance.com";
+const LIFI_ADVANCED_TX_REQUEST = "https://li.quest/v1/advanced/stepTransaction";
 
 const binanceClient = new Spot(API_KEY, API_SECRET, { baseURL: BASE_URL });
 
@@ -43,7 +44,7 @@ export class SwapService {
     }
   }
 
-  // Returns executed route
+  // Executes a swap
   async executeSwap(
     signer: Signer,
     route: Route
@@ -57,10 +58,39 @@ export class SwapService {
     }
   }
 
+  // Generates call data
+  async generateCallData(
+    route: Route
+  ): Promise<{ val: any | null; error: string }> {
+    try {
+      const callData = [];
+      for (let i = 0; i < route.steps.length; i++) {
+        const execTrade = await axios.post(LIFI_ADVANCED_TX_REQUEST, {
+          id: route.id,
+          type: 'swap',
+          tool: route.steps[i].tool,
+          action: {
+            fromChainId: route.fromChainId,
+            toChainId: route.toChainId,
+            fromAmount: route.fromAmount,
+            fromToken: route.fromToken,
+            toToken: route.toToken,
+          }
+        });
+        callData.push(execTrade.data.transactionRequest);
+      }
+      // send execTrade.transactionRequest to the server.
+      return { val: callData, error: "" };
+    } catch (e) {
+      console.log("e: ", e);
+      return { val: null, error: e.message };
+    }
+  }
+
   //Get status of a code
   async getStatus(
     request: GetStatusRequest
-  ): Promise<{ val: StatusResponse; error: string }> {
+  ): Promise<{ val: StatusResponse | null; error: string }> {
     try {
       const status = await lifi.getStatus(request);
       return { val: status, error: "" };
@@ -97,7 +127,7 @@ export class SwapService {
       const tokenBalance = await binanceClient.userAsset({ asset: token });
       const binanceToken = tokenBalance.find((asset) => asset.asset === token);
 
-      if (+binanceToken.free < amount) {
+      if (binanceToken  && +binanceToken.free < amount) {
         //If not enough amount do swap and withdraw
         await binanceClient.newOrder(token, Side.BUY, OrderType.MARKET, {
           quantity: amount,
