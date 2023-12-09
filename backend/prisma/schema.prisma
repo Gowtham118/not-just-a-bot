@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model usertable {
+  id             Int        @id @default(autoincrement())
+  createdAt      DateTime   @default(now())
+  updatedat      DateTime   @updatedAt
+  authType       Auth
+  authslug       String     @unique // esdsa : wallet address , zkellastic : pwdhas , default : uuid , custodial : none
+  accountAddress String     @unique
+  systemKey      String     @unique
+  strategies     strategy[]
+}
+
+model strategy {
+  id        Int       @id @default(autoincrement())
+  owner     usertable @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  isActive Boolean
+  strategy String
+}
+
+enum Auth {
+  custodial
+  defaultWallet //[semi custodial OAUTH , SSO]
+  ecdsaWallet // non custodial
+  zkEllasticWallet // userName Pw - non custodial
+}
