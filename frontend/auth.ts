@@ -22,19 +22,41 @@ export const {
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        // do zk stuff
-        return null
-        const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
-
-        if (user) {
-          return user
-        } else {
+        try {
+          // do zk stuff
+          // const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+          console.log('auth: ')
+          // if (user) {
+          //   return user
+          // } else {
+          //   return null
+          // }
+          return null
+        } catch (error) {
+          console.log('error :', error)
           return null
         }
       }
     })
   ],
+  // callbacks: {
+  //   jwt({ token, profile }) {
+  //     if (profile) {
+  //       token.id = profile.id
+  //       token.image = profile.avatar_url || profile.picture
+  //     }
+  //     return token
+  //   },
+  //   session: ({ session, token }) => {
+  //     if (session?.user && token?.id) {
+  //       session.user.id = String(token.id)
+  //     }
+  //     return session
+  //   },
+  //   authorized({ auth }) {
+  //     return !!auth?.user // this ensures there is a logged in user for -every- request
+  //   }
+  // },
   pages: {
     signIn: '/sign-in'
   }
