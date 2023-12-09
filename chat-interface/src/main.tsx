@@ -4,11 +4,14 @@ import App from "./App.tsx";
 import "./index.css";
 import "./App.css";
 import { Buffer } from "buffer";
+import { AuthProvider } from "./providers/AuthProvider.tsx";
 
 window.Buffer = Buffer;
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <AuthProvider>
+            <App />
+        </AuthProvider>
+    </React.StrictMode>
 );
