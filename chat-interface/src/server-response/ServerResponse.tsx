@@ -20,6 +20,9 @@ export const ServerResponse = ({ data }: { data: string }) => {
         {respJson && respJson.intent === IntentTypes.CrossChainTrade && (
           <CrossChainTrade slots={respJson.slots} />
         )}
+        {respJson && respJson.intent === IntentTypes.DexTrade && (
+          <DexTrade slots={respJson.slots} />
+        )}
       </div>
     </div>
   );
@@ -81,6 +84,26 @@ export const CrossChainTrade = ({ slots }) => {
       </div>
       <div className="flex gap-x-4 items-center">
         {slots.fromamount} {slots.fromasset} <FaArrowRightLong />
+        {slots.toAsset}
+      </div>
+      <div className="flex justify-center">
+        <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2">
+          Continue
+        </button>
+        <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg m-2">
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+};
+export const DexTrade = ({ slots }) => {
+  return (
+    <div className="bg-black p-6 rounded-xl border-[1px] border-[#27272a] flex flex-col gap-y-2">
+      <div className="font-bold">Cross Chain Trade:-</div>
+      <div className="flex gap-x-4 items-center">Network:- {slots.chain}</div>
+      <div className="flex gap-x-4 items-center">
+        {slots.fromAmount} {slots.fromAsset} <FaArrowRightLong />
         {slots.toAsset}
       </div>
       <div className="flex justify-center">
