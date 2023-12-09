@@ -10,23 +10,14 @@ import { Login } from "./screens/Login";
 import Landing from "./screens/Landing";
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route
-                    path="/"
-                    element={<Landing />}
-                ></Route>
-                <Route element={<PrivateRoutes />}>
-                    <Route
-                        path="/:address"
-                        element={<Dashboard />}
-                    ></Route>
-                </Route>
-                <Route
-                    path="/login"
-                    element={<Login />}
-                ></Route> */}
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />}></Route>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/:address" element={<Dashboard />}></Route>
+        </Route>
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
     </Router>
   );

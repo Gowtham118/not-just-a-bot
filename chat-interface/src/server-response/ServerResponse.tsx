@@ -1,5 +1,5 @@
-import { BiLogoFirebase } from "react-icons/bi";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { FaRobot } from "react-icons/fa";
 
 export const ServerResponse = ({ data }: { data: string }) => {
   let respJson;
@@ -12,16 +12,16 @@ export const ServerResponse = ({ data }: { data: string }) => {
   return (
     <div className="text-light-grey p-2">
       <div className="flex gap-x-6 items-center">
-        <BiLogoFirebase className={"w-8 h-8"} />
+        <FaRobot className={"w-8 h-8"} />
         {!respJson && <p>{data}</p>}
         {respJson && respJson.intent === IntentTypes.TransferAmount && (
-          <TransferAmount slots={respJson.slots} />
+          <TransferAmount data={respJson} />
         )}
         {respJson && respJson.intent === IntentTypes.CrossChainTrade && (
-          <CrossChainTrade slots={respJson.slots} />
+          <CrossChainTrade data={respJson} />
         )}
         {respJson && respJson.intent === IntentTypes.DexTrade && (
-          <DexTrade slots={respJson.slots} />
+          <DexTrade data={respJson} />
         )}
       </div>
     </div>
@@ -29,7 +29,7 @@ export const ServerResponse = ({ data }: { data: string }) => {
 };
 
 export const IntentTypes = {
-  CrossChainTrade: "CrossChainTrade",
+  CrossChainTrade: "CrossChainSwap",
   TransferAmount: "TransferAmount",
   DexTrade: "DexTrade",
 };
@@ -54,14 +54,14 @@ export type DexTrade = {
   toAsset: string;
 };
 
-export const TransferAmount = ({ slots }) => {
+export const TransferAmount = ({ data }) => {
   return (
     <div className="bg-black p-6 rounded-xl border-[1px] border-[#27272a] flex flex-col gap-y-2">
       <div className="font-bold">TRANSFER:-</div>
-      <div>Network:- {slots.chain}</div>
+      <div>Network:- {data.chain}</div>
       <div className="flex gap-x-4 items-center">
-        {slots.sendAmount} {slots.sendAsset} <FaArrowRightLong />
-        {slots.toAccount}
+        {data.toAmount} {data.asset.toUpperCase()} <FaArrowRightLong />
+        {data.toAccount}
       </div>
       <div className="flex justify-center">
         <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2">
@@ -75,16 +75,16 @@ export const TransferAmount = ({ slots }) => {
   );
 };
 
-export const CrossChainTrade = ({ slots }) => {
+export const CrossChainTrade = ({ data }) => {
   return (
     <div className="bg-black p-6 rounded-xl border-[1px] border-[#27272a] flex flex-col gap-y-2">
       <div className="font-bold">Cross Chain Trade:-</div>
       <div className="flex gap-x-4 items-center">
-        Network:- {slots.fromchain} <FaArrowRightLong /> {slots.tochain}
+        {data.fromChain} <FaArrowRightLong /> {data.toChain}
       </div>
       <div className="flex gap-x-4 items-center">
-        {slots.fromamount} {slots.fromasset} <FaArrowRightLong />
-        {slots.toAsset}
+        {data.fromAmount} {data.fromAsset.toUpperCase()} <FaArrowRightLong />
+        {data.toAsset.toUpperCase()}
       </div>
       <div className="flex justify-center">
         <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2">
@@ -97,14 +97,14 @@ export const CrossChainTrade = ({ slots }) => {
     </div>
   );
 };
-export const DexTrade = ({ slots }) => {
+export const DexTrade = ({ data }) => {
   return (
     <div className="bg-black p-6 rounded-xl border-[1px] border-[#27272a] flex flex-col gap-y-2">
-      <div className="font-bold">Cross Chain Trade:-</div>
-      <div className="flex gap-x-4 items-center">Network:- {slots.chain}</div>
+      <div className="font-bold">Dex Trade:-</div>
+      <div className="flex gap-x-4 items-center">Network:- {data.chain}</div>
       <div className="flex gap-x-4 items-center">
-        {slots.fromAmount} {slots.fromAsset} <FaArrowRightLong />
-        {slots.toAsset}
+        {data.fromAmount} {data.fromAsset.toUpperCase()} <FaArrowRightLong />
+        {data.toAsset.toUpperCase()}
       </div>
       <div className="flex justify-center">
         <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2">

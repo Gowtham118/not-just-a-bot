@@ -19,15 +19,17 @@ export const Login = () => {
       setUsername(username);
       setPassword(password);
       login();
-      navigate("/");
+      navigate("/0x3139C33b7218237Bbd22235C78078731216fD05b");
     }
     setLoading(false);
   };
 
   return (
-    <div className="h-full w-full flex flex-col">
-      <div className="m-auto w-[40%] tablet:w-[70%] bg-grey text-white p-8 flex flex-col justify-between rounded-xl gap-y-6">
-        <div className="text-5xl text-white font-bold text-center">Login</div>
+    <div className="h-full w-full flex flex-col bg-[#18181a]">
+      <div className="m-auto w-[40%] tablet:w-[70%] bg-black border-[1px] border-[#27272a] text-white p-8 flex flex-col justify-between rounded-xl gap-y-6">
+        {/* <div className="text-5xl text-light-grey font-bold text-center">
+          Login
+        </div> */}
         <div className="flex flex-col gap-y-2">
           <InputBox
             label="Username"
@@ -43,13 +45,22 @@ export const Login = () => {
             type="password"
           />
         </div>
-        <Button
-          onClick={handleSubmit}
-          type={username && password ? "active" : "disabled"}
-          loading={loading}
-        >
-          LOGIN
-        </Button>
+        <div className="flex gap-x-4 justify-center">
+          <Button
+            onClick={handleSubmit}
+            type={username && password ? "active" : "disabled"}
+            loading={loading}
+          >
+            Login
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            type={username && password ? "active" : "disabled"}
+            loading={loading}
+          >
+            Signup
+          </Button>
+        </div>
       </div>
     </div>
   );
