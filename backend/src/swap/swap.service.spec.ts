@@ -118,4 +118,11 @@ describe('SwapService', () => {
 
   // });
 
+  // describe('fiatToCrypto', () => {
+  //   it("should create new market order and execute", async () => { 
+  //     const amount = 1;
+  //     const token = 'MATIC';
+  //     const result = await service.fiatToCrypto(amount, token);
+  //   })
+  // });
 });
