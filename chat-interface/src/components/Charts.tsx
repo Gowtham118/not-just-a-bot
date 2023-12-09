@@ -26,7 +26,7 @@ const LineChartComponent = ({
         data={data}
         margin={{ top: 20, right: 30, left: 20, bottom: 50 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#555" />
         <XAxis
           dataKey="timestamp"
           type="category"
@@ -34,14 +34,20 @@ const LineChartComponent = ({
           tickFormatter={convertTimestampToLocalDate}
           angle={-30}
           textAnchor="end"
+          tick={{ fill: "#fff" }}
         />
-        <YAxis dataKey="value_usd" />
-        <Tooltip />
+        <YAxis dataKey="value_usd" tick={{ fill: "#fff" }} />
+        <Tooltip
+          contentStyle={{ backgroundColor: "#333", border: "1px solid #333" }}
+          labelStyle={{ color: "#d1d5db" }} // Set label text color to black
+          itemStyle={{ color: "#d1d5db" }} // Set item text color to black
+        />
         <Line
           type="monotone"
           dataKey="value_usd"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          stroke="#ffffff"
+          // activeDot={{ r: 8 }}
+          dot={false}
         />
       </LineChart>
     </ResponsiveContainer>
