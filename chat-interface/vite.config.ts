@@ -4,8 +4,10 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
-  build: {
-    rollupOptions: {},
-  },
+    plugins: [react(), nodePolyfills()],
+    build: {
+        rollupOptions: {
+            external: ["fs/promises"],
+        },
+    },
 });

@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const verifyAuth = (username: string, password: string) => {
-        username + password;
+        console.log(username + password);
         // verify zk proof
         return true;
     };

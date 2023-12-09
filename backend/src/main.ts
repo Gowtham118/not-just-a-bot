@@ -12,6 +12,7 @@ import { AppModule } from './app.module';
  */
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   /**
    * global pipes parse incoming body to my controllers before hand and extract data params according to typescript   definitions i provided
    * I was also using class-validator and class-transformer for support

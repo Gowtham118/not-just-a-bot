@@ -37,6 +37,7 @@ export async function getBalance(
 ): Promise<string> {
   // Create a provider for the specified chainId
   const provider = new ethers.providers.JsonRpcProvider(RPC[chainId]);
+  console.log(RPC[chainId]);
 
   // Get the balance of the address
   const balance = await provider.getBalance(address);
