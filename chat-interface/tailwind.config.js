@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["notosans", ...defaultTheme.fontFamily.sans],
+        eightbit: ["eightbit", ...defaultTheme.fontFamily.sans]
       },
       colors: {
         grey: "#1c1d21",

@@ -7,19 +7,20 @@ import {
 import { Dashboard } from "./screens/Dashboard";
 import { PrivateRoutes } from "./components/PrivateRoutes";
 import { Login } from "./screens/Login";
+import Landing from "./screens/Landing";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route
+                    path="/"
+                    element={<Landing />}
+                ></Route>
                 <Route element={<PrivateRoutes />}>
                     <Route
                         path="/:address"
                         element={<Dashboard />}
-                    ></Route>
-                    <Route
-                        path="/"
-                        element={<Navigate to="/:login" />}
                     ></Route>
                 </Route>
                 <Route

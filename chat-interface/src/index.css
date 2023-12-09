@@ -9,6 +9,12 @@ body {
   background: #111318;
 }
 
+@font-face{
+  font-family: eightbit;
+  font-weight: 400;
+  src: url("/EightBit.ttf")
+}
+
 @font-face {
   font-family: notosans;
   font-weight: 300;
