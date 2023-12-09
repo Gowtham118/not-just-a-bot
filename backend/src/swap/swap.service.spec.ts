@@ -56,7 +56,7 @@ describe('SwapService', () => {
   });
 
   describe('executeSwap', () => {
-    
+
     it('should return the executed route with no error', async () => {
       const route = await service.getRoutes(routesRequest);
 
@@ -77,16 +77,16 @@ describe('SwapService', () => {
 
   describe('getStatus', () => {
     test('should return the status with no error', async () => {
-      const request = { txHash: "0xbceef6bb170aebecce4f302cb06375524a543c9954fc263368eab3dce5deae4c"};
+      const request = { txHash: "0xbceef6bb170aebecce4f302cb06375524a543c9954fc263368eab3dce5deae4c" };
 
       const result = await service.getStatus(request);
 
       expect(result.val).toEqual(expect.any(Object));
       expect(result.error).toBe("");
-    },10000);
+    }, 10000);
 
     test('should handle errors and return null with an error message', async () => {
-      const invalidRequest = {txHash: "0xjbajkbjacbkjcnjkcnjncjjdiwoalkl"};
+      const invalidRequest = { txHash: "0xjbajkbjacbkjcnjkcnjncjjdiwoalkl" };
 
       const result = await service.getStatus(invalidRequest);
 
