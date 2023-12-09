@@ -8,7 +8,6 @@
 
 // const yourActionProvider: ActionProvider = {
 //   greet: () => {
-//     console.log("Hello!");
 //   },
 //   // Add more methods as needed
 // };

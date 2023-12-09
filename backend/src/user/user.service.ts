@@ -25,7 +25,7 @@ export class UserService {
   private entrypoint: EntryPoint;
   private systemAccount: ethers.Wallet;
   constructor(private postgre: PrismaService, private config: ConfigService) {
-    const provider = new ethers.providers.JsonRpcProvider(RPC[1]);
+    const provider = new ethers.providers.JsonRpcProvider(RPC[11155111]);
     this.implFactory = new ethers.Contract(
       AddressConfig.ImplFactory,
       WalletFactoryAbi,
@@ -46,7 +46,7 @@ export class UserService {
 
   // get Wallet based on GetWalletDTO
   async getWallet(walletConfig: WalletDTO): Promise<ReturnWallet> {
-    let authSlug = this.GetAuthSlug(
+    const authSlug = this.GetAuthSlug(
       walletConfig.Wallet_type,
       walletConfig.Value,
     );
@@ -60,6 +60,8 @@ export class UserService {
       throw new Error('Wallet not found');
     }
 
+    console.log(walletConfig.chaindId);
+
     return {
       address: wallet.accountAddress,
       balance: await getBalance(walletConfig.chaindId, wallet.accountAddress),
@@ -67,24 +69,19 @@ export class UserService {
   }
 
   async createWallet(walletConfig: WalletDTO): Promise<ReturnWallet> {
-    let authSlug = this.GetAuthSlug(
+    const authSlug = this.GetAuthSlug(
       walletConfig.Wallet_type,
       walletConfig.Value,
     );
-    let systemKey = this.config.get('SERVER_ACCOUNT_PRIV');
-    let accountAddress = await this.computeAddress(
+    console.log('post auth slug');
+    const systemKey = this.config.get('SERVER_ACCOUNT_PRIV');
+    const accountAddress = await this.computeAddress(
       walletConfig.Wallet_type,
       walletConfig.Value,
-      systemKey,
+      this.config.get('SYSTEM_ACCOUNT'),
     );
-    switch (walletConfig.Wallet_type) {
-      case WalletType.custodial:
-        systemKey = authSlug;
-        accountAddress = ethers.utils.computeAddress(authSlug);
-        break;
-      default:
-        throw new Error('Invalid wallet type');
-    }
+    console.log(accountAddress);
+
     const wallet = await this.postgre.usertable.findUnique({
       where: {
         authslug: authSlug,
@@ -117,7 +114,7 @@ export class UserService {
     if (TxObject.Wallet_type === WalletType.custodial) {
       throw new Error('Custodial wallet not supported');
     }
-    let authSlug = this.GetAuthSlug(TxObject.Wallet_type, TxObject.Value);
+    const authSlug = this.GetAuthSlug(TxObject.Wallet_type, TxObject.Value);
 
     const wallet = await this.postgre.usertable.findUnique({
       where: {
@@ -153,7 +150,7 @@ export class UserService {
       throw new Error('non Custodial wallet not supported for this route');
     }
 
-    let authSlug = this.GetAuthSlug(TxObject.Wallet_type, TxObject.Value);
+    const authSlug = this.GetAuthSlug(TxObject.Wallet_type, TxObject.Value);
 
     const wallet = await this.postgre.usertable.findUnique({
       where: {
@@ -219,7 +216,7 @@ export class UserService {
   ): Promise<string> {
     switch (walletType) {
       case WalletType.defaultWallet || WalletType.ecdsaWallet:
-        let userOpHash = await this.entrypoint.getUserOpHash({
+        const userOpHash = await this.entrypoint.getUserOpHash({
           ...userOps,
           signature: '0x',
         });

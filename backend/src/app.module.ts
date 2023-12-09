@@ -16,7 +16,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { SwapModule } from './swap/swap.module';
 import { TradesModule } from './trades/trades.module';
-import { TelegramModule } from './telegram/telegram.module';
 
 /**
  * Root Of the APP with request logging middleware implemented
@@ -46,7 +45,6 @@ import { TelegramModule } from './telegram/telegram.module';
     UserModule,
     SwapModule,
     TradesModule,
-    TelegramModule,
   ],
   providers: [PrismaService, AppService],
   controllers: [AppController],

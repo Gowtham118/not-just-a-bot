@@ -1,5 +1,5 @@
 export const RPC: Record<number, string> = {
-  1: 'https://mainnet.infura.io/v3/',
+  11155111: 'https://sepolia.infura.io/v3/015382ef33f947959eaead702b59eb6f',
 };
 
 export const AddressConfig = {
