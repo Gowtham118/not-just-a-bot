@@ -25,6 +25,7 @@ export const Chat: React.FC = () => {
   }, [messages]);
 
   const handleSend = async () => {
+    if (!inputValue) return;
     setMessages((p) => [
       ...p,
       {
@@ -53,7 +54,7 @@ export const Chat: React.FC = () => {
   return (
     <div className="flex flex-col h-full justify-between w-4/5 mx-auto pt-6">
       <div
-        className="overflow-scroll h-[80vh]"
+        className="overflow-y-scroll h-[80vh]"
         ref={messagesContainerRef}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
@@ -86,12 +87,14 @@ export const Chat: React.FC = () => {
               }
             }}
           />
-          <button
-            className="text-white px-6 rounded-xl border-[1px] border-[#27272a]"
-            onClick={handleSend}
-          >
-            Send
-          </button>
+          <div className="flex justify-center px-3">
+            <button
+              className="text-white my-2 px-3 py-1 rounded-xl border-[1px] border-[#27272a]"
+              onClick={handleSend}
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>

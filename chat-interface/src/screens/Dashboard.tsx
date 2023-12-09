@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Chat } from "../chat/Chat";
 
 export const Dashboard = () => {
-  const [currentDashboard, setCurrentDasshboard] = useState("home");
+  const [currentDashboard, setCurrentDashboard] = useState("home");
   const balances = useBalances();
   const transactions = useTransactions();
   const chartData = useChartData();
@@ -19,7 +19,7 @@ export const Dashboard = () => {
     <div className="bg-[#18181a]">
       <TopBar />
       <div className="flex">
-        <Sidebar setCurrentDasshboard={setCurrentDasshboard} />
+        <Sidebar setCurrentDashboard={setCurrentDashboard} />
         {currentDashboard == "home" && (
           <div className="w-[80%]">
             <Chat />
@@ -29,7 +29,7 @@ export const Dashboard = () => {
           <div className="w-[80%]">
             <div>{balances && <Balances balances={balances} />}</div>
             <div className="h-[700px]">
-              <div className="p-6 text-xl font-bold">
+              <div className="p-6 text-xl font-bold text-light-grey">
                 USD Value Trend Over Time:-
               </div>
               {chartData && <LineChartComponent data={chartData} />}
