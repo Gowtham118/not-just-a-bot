@@ -23,12 +23,14 @@ export class UserController {
   }
 
   @Post('submitTx')
-  async submitTx(TxObject: UserOpDto): Promise<string> {
+  async submitTx(@Body() TxObject: UserOpDto): Promise<string> {
     return this.userService.submitTx(TxObject);
   }
 
   @Post('submitCustodialTx')
-  async submitCustodialTx(TxObject: CustodialTxObject): Promise<string> {
+  async submitCustodialTx(
+    @Body() TxObject: CustodialTxObject,
+  ): Promise<string> {
     return this.userService.submitCustodialTx(TxObject);
   }
 

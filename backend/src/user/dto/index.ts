@@ -79,11 +79,11 @@ export class UserOpDto extends WalletDTO {
   maxPriorityFeePerGas: number;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   paymasterAndData: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsString()
   signature: string;
 }
 

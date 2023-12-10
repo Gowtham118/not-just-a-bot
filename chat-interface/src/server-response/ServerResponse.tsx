@@ -1,5 +1,7 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FaRobot } from "react-icons/fa";
+import { useZk } from "../providers/zkProvider";
+import { chainToId } from "../constants";
 
 export const ServerResponse = ({ data }: { data: string }) => {
   let respJson;
@@ -55,6 +57,16 @@ export type DexTrade = {
 };
 
 export const TransferAmount = ({ data }) => {
+  const { generateUserOps } = useZk();
+  const handleContinue = async () => {
+    console.log(data.toAccount, data.toAmount || data.sendAmount);
+    const res = await generateUserOps(
+      data.toAccount,
+      data.toAmount || data.sendAmount,
+      chainToId[(data.chain as string).toLowerCase()]
+    );
+    console.log("res :", res);
+  };
   return (
     <div className="bg-black p-6 rounded-xl border-[1px] border-[#27272a] flex flex-col gap-y-2">
       <div className="font-bold">TRANSFER:-</div>
@@ -64,7 +76,10 @@ export const TransferAmount = ({ data }) => {
         {data.toAccount}
       </div>
       <div className="flex justify-center">
-        <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2">
+        <button
+          className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg bg-white text-black m-2"
+          onClick={handleContinue}
+        >
           Continue
         </button>
         <button className="border-[1px] border-[#27272a] px-4 py-2 rounded-lg m-2">
